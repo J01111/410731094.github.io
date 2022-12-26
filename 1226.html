@@ -1,0 +1,98 @@
+<html>
+<head></head>
+<body bgcolor="#ccccff">
+
+<canvas width="10000" height="10000" id="myCanvas" style="border:1px solid;position:absolute;top:100;left:100;"></canvas>
+<input id="color" placeholder="更換顏色">
+<input type="button" id="save" value="在新視窗開啟圖片">
+<input value="清除"  type="button" onClick="myrefresh()">
+<input id="line" placeholder="輸入粗細">
+
+<script>
+var canvas = document.getElementById("myCanvas"); // 取得物件
+var ctx = canvas.getContext("2d"); // 取得繪圖環境
+var drawMode, mx, my;
+ 
+canvas.onmousedown = function(ev){
+    ctx.beginPath();
+    ctx.strokeStyle = document.getElementById("color").value;
+ ctx.lineWidth =document.getElementById("line").value;
+    mx = event.clientX - parseInt(canvas.style.left) + window.pageXOffset;
+    my = event.clientY - parseInt(canvas.style.top) + window.pageYOffset;
+    ctx.moveTo(mx, my);
+    drawMode = true;
+}
+ 
+canvas.onmousemove = function(ev){
+    if(drawMode){
+        mx = event.clientX - parseInt(canvas.style.left) + window.pageXOffset;
+        my = event.clientY - parseInt(canvas.style.top) + window.pageYOffset;
+        ctx.lineTo(mx, my);
+        ctx.stroke();
+    }
+}
+ 
+canvas.onmouseup = function(){
+    drawMode = false;
+}
+ 
+document.getElementById("color").onclick = function(){
+
+}
+
+
+
+document.getElementById("save").onclick = function(){
+new_win = window.open();
+new_win.document.write("<img src='" + ctx.canvas.toDataURL('img/png') + "'>")
+
+}
+
+
+function draw() {
+  var canvas = document.getElementById('canvas');
+  if (canvas.getContext){
+    var ctx = canvas.getContext('2d');
+
+    // Filled triangle
+    ctx.beginPath();
+    ctx.moveTo(0,0);
+    ctx.lineTo(10,25);
+    ctx.lineTo(25,105);
+    ctx.fill();
+
+    // Stroked triangle
+    ctx.beginPath();
+    ctx.moveTo(125,125);
+    ctx.lineTo(125,45);
+    ctx.lineTo(45,125);
+    ctx.closePath();
+    ctx.stroke();
+  }
+}
+
+function myrefresh() {
+
+window.location.reload();
+
+  }
+
+</script>
+<head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Document</title> <style> *{ margin: 0; padding: 0; box-sizing:border-box; } body{ height: 10vh; display: flex; justify-content: center; align-items: center; } .frame{ width:500px; min-height: 500px; position: relative; } .frame:hover .circle{ opacity: 1; } .circle{ position: absolute; top: 0; left: 0; width: 200px; height: 200px; border: 5px solid rgb(0, 0, 0); box-shadow: 0 0 5px rgb(0,0,0); border-radius: 50%; overflow: hidden; cursor:pointer; opacity: 0; } .circle img{ position: absolute; top: 0; left: 0; } </style>
+</head>
+<body> <div class="frame"> 
+    <img src="images-2.jpg" width="100%">
+     <div class="circle"> 
+        <img src="images-2.jpg"> 
+    </div>
+</div> 
+<script> 
+    var frame = document.querySelector('.frame'); 
+var circle = document.querySelector('.circle'); 
+var picture = document.querySelector('.circle img'); frame.addEventListener('mousemove',
+function(e){ /*  左右 */ let x = e.clientX; let left = frame.offsetLeft; let moveX = x - left - circle.offsetWidth/2; if(moveX<=0) moveX=0; if(moveX>=frame.offsetWidth - circle.offsetWidth )   moveX= frame.offsetWidth - circle.offsetWidth ; circle.style.left = moveX + 'px'; let moveleft = ( moveX + circle.offsetWidth/2 ) / frame.offsetWidth * picture.offsetWidth - circle.offsetWidth/2; picture.style.left = -moveleft + 'px'; /* 上下 */ let y = e.clientY; let top = frame.offsetTop; let moveY = y - top - circle.offsetHeight/2; if(moveY<=0) moveY=0; if(moveY>=frame.offsetHeight - circle.offsetHeight ) moveY= frame.offsetHeight - circle.offsetHeight ; circle.style.top = moveY + 'px'; let movetop = ( moveY + circle.offsetHeight/2 ) / frame.offsetHeight * picture.offsetHeight - circle.offsetHeight/2; picture.style.top = -movetop + 'px'; }) 
+</script>
+</body>
+</html>
+ 
+</body></html>
